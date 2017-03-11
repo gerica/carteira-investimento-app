@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+     </button>
+    <ion-title text-center>
+      Carteira de Investimentos
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <button *ngIf="!auth.authenticated()" ion-button block (click)="auth.login()">Login</button>
+  <button *ngIf="auth.authenticated()" ion-button block (click)="auth.logout()">Logout</button>
+</ion-content>
