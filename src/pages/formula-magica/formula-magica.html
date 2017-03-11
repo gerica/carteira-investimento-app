@@ -53,7 +53,7 @@
       </tr>
     </tfoot>
   </table>-->
-
+  <!--
   <ion-card>
     <ion-card-header>
       Top 5 Ações para Investir
@@ -85,6 +85,16 @@
         </tbody>
       </table>
     </ion-card-content>
-
-  </ion-card>
+  </ion-card>-->
+  <h1>Top 5 Ações para Investir</h1>
+  <ion-list>
+    <ion-item *ngFor="let p of papeisTop5">
+      <ion-avatar item-left>        
+        {{p.rank}}
+      </ion-avatar>
+      <h2>Papel: {{p.papel}}</h2>
+      <h3>ROE: {{p?.fundamento.roe}}</h3>
+      <p>P/L: {{p?.fundamento.p_l}} | P/VP: {{p?.fundamento.p_vp}}</p>      
+    </ion-item>
+  </ion-list>
 </ion-content>

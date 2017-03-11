@@ -1,16 +1,28 @@
 page-formula-magica {
-table {
-width:90%;
-border-top:1px solid #e5eff8;
-border-right:1px solid #e5eff8;
-margin:1em auto;
-border-collapse:collapse;
-}
-td {
-color:#678197;
-border-bottom:1px solid #e5eff8;
-border-left:1px solid #e5eff8;
-padding:.3em 1em;
-text-align:center;
-}
+    table {
+        width:90%;
+        border-top:1px solid #e5eff8;
+        border-right:1px solid #e5eff8;
+        margin:1em auto;
+        border-collapse:collapse;
+    }
+    td {
+        color:#678197;
+        border-bottom:1px solid #e5eff8;
+        border-left:1px solid #e5eff8;
+        padding:.3em 1em;
+        text-align:center;
+    }
+
+    .formula-magica{
+        padding-top: 48px;
+        padding-bottom: 48px;
+        padding: 30px;
+        margin-bottom: 30px;
+        font-size: 14px;
+        font-weight: 200;
+        line-height: 2.1428571435;
+        color: inherit;
+        background-color: #f7f7f7;
+    }
 }
