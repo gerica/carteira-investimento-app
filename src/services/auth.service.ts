@@ -1,3 +1,4 @@
+import { Usuario } from './../model/usuario';
 import { PageMenuService } from './page-menu.service';
 import { PageMenu } from './../model/page.menu';
 import { Storage } from '@ionic/storage';
@@ -14,7 +15,7 @@ export class AuthService {
     lock = new Auth0Lock('7B6Jko9Th6kGVUFxIUcue8Xk3kV3CoSg', 'rogeriocardoso.auth0.com', {});
     storage: Storage = new Storage();
     refreshSubscription: any;
-    user: Object;
+    user: Usuario;
     zoneImpl: NgZone;
     accessToken: string;
     idToken: string;
@@ -24,7 +25,7 @@ export class AuthService {
         private pageMenuSrc: PageMenuService) {
         this.zoneImpl = zone;
         // Check if there is a profile saved in local storage
-        this.storage.get('profile').then(profile => {
+        this.getProfile().then(profile => {
             this.user = JSON.parse(profile);
         }).catch(error => {
             console.log(error);
@@ -49,11 +50,12 @@ export class AuthService {
                         alert(error);
                         return;
                     }
-
+                    
                     pageMenuSrc.togglePage(PageMenu.ENTRADA);
                     profile.user_metadata = profile.user_metadata || {};
                     this.storage.set('profile', JSON.stringify(profile));
                     this.user = profile;
+                    console.log(this.user);
                 });
 
                 this.lock.hide();
@@ -161,6 +163,9 @@ export class AuthService {
         }).catch(error => {
             console.log(error);
         });
+    }
 
+    public getProfile(): Promise<any> {
+        return this.storage.get('profile');
     }
 }

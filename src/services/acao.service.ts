@@ -1,9 +1,4 @@
-import { Http, Headers } from '@angular/http';
-import { BaseService } from './../base.service';
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 declare var firebase: any;

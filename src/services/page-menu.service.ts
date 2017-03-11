@@ -1,7 +1,3 @@
-import { PageMenu } from './../model/page.menu';
-import { HomePage } from './../pages/home/home';
-import { EntradaPage } from './../pages/entrada/entrada';
-import { FormulaMagicaPage } from './../pages/formula-magica/formula-magica';
 import { Injectable } from '@angular/core';
 
 @Injectable()

@@ -11,19 +11,68 @@
 
 
 <ion-content padding>
-  <div class="jumbotron">
+  <div class="jumbotron" *ngIf="!auth.authenticated()">
     <h1>Gestão de Carteira</h1>
     <p>
       Adminsitração de sua carteira de investimentos. Adotando estratégias para operações em renda fixa e variável.
     </p>
     <hr>
-    <p *ngIf="!auth.authenticated()">
+    <p>
       Começe a gerenciar seus investimentos.
       <button ion-button (click)="auth.login()">Login</button>
     </p>
-    <p *ngIf="auth.authenticated()">
-      Desconecatar
-      <button ion-button (click)="auth.logout()">Logout</button>
-    </p>
+  </div>
+  
+  <div *ngIf="auth.authenticated()">
+    <h1>Operações Abertas</h1>
+
+    <table class="altrowstable" id="alternatecolor">
+      <thead>
+        <tr>
+          <th>Papel</th>
+          <th>Data</th>
+          <th>Tipo</th>
+          <th>Preço Unitário</th>
+          <!--<th>despesa</th>-->
+          <th>Qtd</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of entradas">
+          <td>{{item?.papel?.papel}}</td>
+          <td>{{item?.data}}</td>
+          <td>{{item?.tipoOperacao}}</td>
+          <td>{{item?.precoUnitario | currency:'BRL':true}}</td>
+          <!--<td>{{item?.despesa | currency:'BRL':true}}</td>-->
+          <td>{{item?.quantidade}}</td>
+          <td>{{item?.total | currency:'BRL':true}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Totais</td>
+          <td colspan="3"></td>
+          <td>{{totalQuantidade}}</td>
+          <td>{{totalValor | currency:'BRL':true}}</td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <p>Carteira de Investimentos</p>
+    <ion-buttons end>
+      <button ion-button icon-right color="royal" (click)="auth.login()" *ngIf="!auth.authenticated()">
+        Login
+        <ion-icon name="log-in"></ion-icon>
+      </button>
+      <button ion-button icon-right color="royal" (click)="auth.logout()" *ngIf="auth.authenticated()">
+        Logout
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

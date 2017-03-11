@@ -1,3 +1,4 @@
+import { PageBase } from './../page.base';
 import { Papel } from './../../model/papel';
 import { AcaoService } from './../../services/acao.service';
 import { Component } from '@angular/core';
@@ -8,13 +9,15 @@ import { LoadingController, ToastController, Toast, Loading } from "ionic-angula
   templateUrl: 'formula-magica.html',
   providers: [AcaoService]
 })
-export class FormulaMagicaPage {
+export class FormulaMagicaPage extends PageBase {
   papeisTop5: Papel[];
   loading: Loading;
   toast: Toast;
   constructor(private acaoSrv: AcaoService,
-    private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController) { }
+    protected loadingCtrl: LoadingController,
+    protected toastCtrl: ToastController) {
+    super(loadingCtrl, toastCtrl);
+  }
 
   ionViewWillEnter() {
     this.createLoading('Carregando...');
@@ -25,25 +28,6 @@ export class FormulaMagicaPage {
       }, err => {
         this.createToast(err.messagem);
       }
-    );    
+    );
   }
-
-  private createLoading(content: string): void {
-    this.loading = this.loadingCtrl.create({
-      content: content
-    });
-    this.loading.present();
-  }
-
-  private createToast(message: string) {
-    this.toast = this.toastCtrl.create({
-      message: message,
-      position: 'middle',
-      showCloseButton: true,
-      closeButtonText: 'Ok'
-    });
-    this.toast.present();
-  }
-
-
 }

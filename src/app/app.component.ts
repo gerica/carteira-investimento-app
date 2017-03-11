@@ -28,7 +28,6 @@ export class MyApp {
     pageMenuSrc.addPage(PageMenu.HOME, HomePage, true);
     pageMenuSrc.addPage(PageMenu.FORMULA_MAGICA, FormulaMagicaPage, true);
     pageMenuSrc.addPage(PageMenu.ENTRADA, EntradaPage, false);
-    console.log(pageMenuSrc.pages);
     this.pages = pageMenuSrc.pages;
 
   }
