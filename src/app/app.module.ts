@@ -8,17 +8,12 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AuthConfig, AuthHttp } from 'angular2-jwt';
-import { Storage } from '@ionic/storage';
-import { Http } from '@angular/http';
+import { IonicStorageModule } from '@ionic/storage';
+import { Http, RequestOptions } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 
-let storage: Storage = new Storage();
-
-export function getAuthHttp(http) {
-  return new AuthHttp(new AuthConfig({
-    globalHeaders: [{ 'Accept': 'application/json' }],
-    tokenGetter: (() => storage.get('id_token'))
-  }), http);
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig({}), http, options);
 }
 
 export const firebaseConfig = {
@@ -41,6 +36,7 @@ export const firebaseConfig = {
   imports: [
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -55,8 +51,8 @@ export const firebaseConfig = {
     PageMenuService,
   {
     provide: AuthHttp,
-    useFactory: getAuthHttp,
-    deps: [Http]
+    useFactory: authHttpServiceFactory,
+    deps: [Http, RequestOptions]
   }]
 })
 export class AppModule { }

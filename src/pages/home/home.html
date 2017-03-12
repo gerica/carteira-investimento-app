@@ -22,10 +22,13 @@
       <button ion-button (click)="auth.login()">Login</button>
     </p>
   </div>
-  
+
   <div *ngIf="auth.authenticated()">
     <h1>Operações Abertas</h1>
-
+    <ion-item>
+      <ion-label>Agrupar Papeis</ion-label>
+      <ion-checkbox color="dark" [checked]="checkAgrupar" [(ngModel)]="checkAgrupar" (click)="onAgruparPapel()"></ion-checkbox>
+    </ion-item>
     <table class="altrowstable" id="alternatecolor">
       <thead>
         <tr>
@@ -63,7 +66,7 @@
 
 <ion-footer>
   <ion-toolbar>
-    <p>Carteira de Investimentos</p>
+    <p>Carteira de Investimentos </p>
     <ion-buttons end>
       <button ion-button icon-right color="royal" (click)="auth.login()" *ngIf="!auth.authenticated()">
         Login

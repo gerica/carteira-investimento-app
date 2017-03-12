@@ -4,24 +4,31 @@ import { PageBase } from './../page.base';
 import { OperacaoEntrada } from './../../model/carteira/operacao-entrada';
 import { OperacaoService } from './../../services/operacao.service';
 import { AuthService } from './../../services/auth.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
   providers: [OperacaoService]
 })
-export class HomePage extends PageBase {
+export class HomePage extends PageBase implements OnInit {
   entradas: OperacaoEntrada[];
   totalQuantidade: number;
   totalValor: number;
   checkAgrupar: boolean = true;
+  usuario: Usuario;
 
   constructor(public auth: AuthService,
     private operacaoService: OperacaoService,
     protected loadingCtrl: LoadingController,
     protected toastCtrl: ToastController) {
     super(loadingCtrl, toastCtrl);
+
+  }
+
+  ngOnInit() {
+    // console.log('chamou...');
+    // this.recuperarOperacoes();
 
   }
 
@@ -32,15 +39,14 @@ export class HomePage extends PageBase {
   public recuperarOperacoes() {
     if (this.auth.authenticated()) {
       this.createLoading('Carregando...');
-      this.auth.getProfile()
-        .then(profile => {
-          console.log(profile);
-          this.recuperarOperacoesEntrada(profile);
-        })
-        .catch(err => {
-          this.loading.dismiss();
-          this.createToast(err.message);
-        });
+      this.auth.fetchProfile((profile: string) => {
+        if (profile === undefined || profile === null) {
+          return;
+        }
+        this.usuario = JSON.parse(profile);
+        this.recuperarOperacoesEntrada(this.usuario);
+
+      });
     }
   }
 
@@ -49,11 +55,11 @@ export class HomePage extends PageBase {
       (data: OperacaoEntrada[]) => {
 
         this.entradas = data.filter(el => {
-          if (el.quantidade > 0)
+          if (el.quantidade > 0 && el.user_id == usuario.user_id)
             return el;
         });
         if (this.checkAgrupar) {
-          this.onAgruparPapel(this.checkAgrupar);
+          this.onAgruparPapel();
         } else {
           this.calcularTotais();
         }
@@ -66,8 +72,8 @@ export class HomePage extends PageBase {
     );
   }
 
-  onAgruparPapel(checked: boolean) {
-    this.checkAgrupar = checked;
+  onAgruparPapel() {
+    
     const entradasAgrupada: OperacaoEntrada[] = [];
 
     if (this.checkAgrupar) {

@@ -29,12 +29,11 @@ export class OperacaoService {
         this._fireBaseDB.update(operacao.operacaoEntrada.$key, operacao.operacaoEntrada);
     }
 
-    public getOperacaoEntradaByUsuario(usuario: Usuario): FirebaseListObservable<any[]> {
-        console.log(usuario.user_id);
+    public getOperacaoEntradaByUsuario(usuario: Usuario): FirebaseListObservable<any[]> {                
         const queryObservable = this.af.database.list('/operacaoEntrada', {
             query: {
                 orderByChild: 'user_id',
-                equalTo: usuario.user_id
+                equalTo: usuario === undefined ? 0 : usuario.user_id
             }
         });
         return queryObservable;
