@@ -1,0 +1,25 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{axioma.titulo}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding *ngIf="axioma !== undefined">
+  <ul class="list-group" *ngFor="let conteudo of axioma.conteudo">
+    <li class="list-group-item">
+      {{ conteudo }}
+    </li>
+  </ul>
+  <hr>
+  <div *ngFor="let axiomaSub of axioma.subAxioma" class="subAxioma">
+    <p>{{axiomaSub.titulo}}</p>
+    <ul class="list-group" *ngFor="let conteudoSub of axiomaSub.conteudo">
+      <li class="list-group-item">
+        {{ conteudoSub }}
+      </li>
+    </ul>
+  </div>
+
+</ion-content>

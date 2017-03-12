@@ -1,0 +1,45 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Os Axiomas de Zurique</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <!--<ion-card *ngFor="let axioma of axiomas">
+    <ion-card-header>
+      {{axioma.titulo}}
+    </ion-card-header>
+    <ion-card-content>
+      <ul class="list-group" *ngFor="let conteudo of axioma.conteudo">
+        <li class="list-group-item">
+          {{ conteudo }}
+        </li>
+      </ul>
+    </ion-card-content>
+    <ion-card *ngFor="let axiomaSub of axioma.subAxioma">
+      <ion-card-header>
+        {{axiomaSub.titulo}}
+      </ion-card-header>
+      <ion-card-content>
+        <ul class="list-group" *ngFor="let conteudoSub of axiomaSub.conteudo">
+          <li class="list-group-item">
+            {{ conteudoSub }}
+          </li>
+        </ul>
+      </ion-card-content>
+    </ion-card>
+  </ion-card>-->
+
+  <ion-list inset>
+    <button ion-item *ngFor="let item of axiomas" (click)="itemSelected(item)">
+    {{ item.titulo }}
+  </button>
+  </ion-list>
+
+</ion-content>

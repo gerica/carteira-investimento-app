@@ -8,6 +8,7 @@ import { Platform, Nav } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HomePage } from '../pages/home/home';
+import { AxiomaPage } from "../pages/axioma/axioma";
 
 
 @Component({
@@ -27,6 +28,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     pageMenuSrc.addPage(PageMenu.HOME, HomePage, true);
     pageMenuSrc.addPage(PageMenu.FORMULA_MAGICA, FormulaMagicaPage, true);
+    pageMenuSrc.addPage(PageMenu.AXIOMA, AxiomaPage, true);
     pageMenuSrc.addPage(PageMenu.ENTRADA, EntradaPage, false);
     this.pages = pageMenuSrc.pages;
 
