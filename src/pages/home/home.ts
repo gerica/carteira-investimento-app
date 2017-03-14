@@ -3,15 +3,15 @@ import { LoadingController, ToastController } from 'ionic-angular';
 import { PageBase } from './../page.base';
 import { OperacaoEntrada } from './../../model/carteira/operacao-entrada';
 import { OperacaoService } from './../../services/operacao.service';
-import { AuthService } from './../../services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { AuthService, PROFILE } from './../../services/auth.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
   providers: [OperacaoService]
 })
-export class HomePage extends PageBase implements OnInit {
+export class HomePage extends PageBase {
   entradas: OperacaoEntrada[];
   totalQuantidade: number;
   totalValor: number;
@@ -26,29 +26,50 @@ export class HomePage extends PageBase implements OnInit {
 
   }
 
-  ngOnInit() {
-    // console.log('chamou...');
-    // this.recuperarOperacoes();
-
-  }
-
   ionViewWillEnter() {
     this.recuperarOperacoes();
+    // //subscribe
+    // project.subscribe(result => console.log('Subscription Streaming:', result));
+
+    // setInterval(() => {
+    //   project.next(Math.random());
+    //   project.complete();
+    // }, 2000);
+
+
+    // //add delayed subscription AFTER loaded
+    // setTimeout(() =>
+    //   project.subscribe(result => console.log('Delayed Stream:', result)
+    //   ), 3000);
+
   }
 
   public recuperarOperacoes() {
     if (this.auth.authenticated()) {
       this.createLoading('Carregando...');
-      this.auth.fetchProfile((profile: string) => {
-        if (profile === undefined || profile === null) {
-          return;
-        }
-        this.usuario = JSON.parse(profile);
-        this.recuperarOperacoesEntrada(this.usuario);
+      this.auth.fetchInfo(PROFILE)
+        .then((profile: string) => {
+          if (profile === undefined || profile === null) {
+            this.auth.project
+              .subscribe((profile: string) => {
+                this.usuario = JSON.parse(profile);
+                this.recuperarOperacoesEntrada(this.usuario);
+              });
+          } else {
+            this.usuario = JSON.parse(profile);
+            this.recuperarOperacoesEntrada(this.usuario);
+          }
 
-      });
+        })
+        .catch(err => {
+          this.loading.dismiss();
+          this.createToast(err.message);
+        });
+
     }
   }
+
+
 
   public recuperarOperacoesEntrada(usuario: Usuario): void {
     this.operacaoService.getOperacaoEntradaByUsuario(usuario).subscribe(
@@ -73,7 +94,7 @@ export class HomePage extends PageBase implements OnInit {
   }
 
   onAgruparPapel() {
-    
+
     const entradasAgrupada: OperacaoEntrada[] = [];
 
     if (this.checkAgrupar) {

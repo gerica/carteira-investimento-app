@@ -29,7 +29,7 @@ export class MyApp {
     pageMenuSrc.addPage(PageMenu.HOME, HomePage, true);
     pageMenuSrc.addPage(PageMenu.FORMULA_MAGICA, FormulaMagicaPage, true);
     pageMenuSrc.addPage(PageMenu.AXIOMA, AxiomaPage, true);
-    pageMenuSrc.addPage(PageMenu.ENTRADA, EntradaPage, false);
+    pageMenuSrc.addPage(PageMenu.ENTRADA, EntradaPage, this.authService.authenticated());
     this.pages = pageMenuSrc.pages;
 
   }

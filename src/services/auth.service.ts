@@ -1,3 +1,4 @@
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { PageMenu } from './../model/page.menu';
 import { PageMenuService } from './page-menu.service';
 import { Usuario } from './../model/usuario';
@@ -14,6 +15,7 @@ export const PROFILE = '_profile';
 export class AuthService {
     // Configure Auth0
     lock = new Auth0Lock('7B6Jko9Th6kGVUFxIUcue8Xk3kV3CoSg', 'rogeriocardoso.auth0.com', {});
+    project = new ReplaySubject();
     // hasProfile: Observable<boolean>;
 
 
@@ -30,12 +32,14 @@ export class AuthService {
             this.storeInfo(TOKEN, authResult.idToken);
             pageMenuSrc.togglePage(PageMenu.ENTRADA);
 
-            // // Fetch profile information
-            // this.lock.getProfile(authResult.idToken, (error, profile: Usuario) => {
-            //     const profileLocal = JSON.stringify(profile);
-            //     localStorage.setItem(PROFILE, profileLocal);
-            //     this.storeInfo(PROFILE, profileLocal);                    
-            // });
+            // Fetch profile information
+            this.lock.getProfile(authResult.idToken, (error, profile: Usuario) => {
+                const profileLocal = JSON.stringify(profile);
+                localStorage.setItem(PROFILE, profileLocal);
+                this.storeInfo(PROFILE, profileLocal);
+                this.project.next(profileLocal);
+                this.project.complete();
+            });
         });
     }
 
@@ -56,6 +60,7 @@ export class AuthService {
         localStorage.removeItem(PROFILE);
         this.removeInfo(TOKEN);
         this.removeInfo(PROFILE);
+        this.pageMenuSrc.togglePage(PageMenu.ENTRADA);
     }
 
     public fetchInfo(name: string): Promise<any> {
@@ -76,7 +81,7 @@ export class AuthService {
                             this.lock.getProfile(token, (error, profile: Usuario) => {
                                 const profileLocal = JSON.stringify(profile);
                                 localStorage.setItem(PROFILE, profileLocal);
-                                this.storeInfo(PROFILE, profileLocal)                                
+                                this.storeInfo(PROFILE, profileLocal)
                                 callBack(profileLocal);
                             });
                         })
