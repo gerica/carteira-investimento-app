@@ -1,4 +1,4 @@
-import { ListaEntradaPage } from './../pages/entrada/cadastro/lista-entrada/lista-entrada';
+import { ListaEntradaPage } from './../pages/entrada/lista-entrada/lista-entrada';
 import { AxiomaDetalhePage } from './../pages/axioma/axioma-detalhe/axioma-detalhe';
 import { PageMenuService } from './../services/page-menu.service';
 import { AuthService } from './../services/auth.service';

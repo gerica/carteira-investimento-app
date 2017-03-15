@@ -1,3 +1,4 @@
+import { ListaEntradaPage } from './lista-entrada/lista-entrada';
 import { CadastroPage } from './cadastro/cadastro';
 import { Component } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
@@ -8,17 +9,22 @@ import { NavController, ViewController } from 'ionic-angular';
   templateUrl: 'entrada.html'
 })
 export class EntradaPage {
-  
+
   constructor(public navCtrl: NavController,
     private viewCtrl: ViewController) { }
 
-  
+
   onViewWillEnter() {
     this.viewCtrl.setBackButtonText('Voltar');
   }
 
   onCadastro() {
     this.navCtrl.push(CadastroPage);
+  }
+
+
+  onPageList() {
+    this.navCtrl.push(ListaEntradaPage);
   }
 
 }

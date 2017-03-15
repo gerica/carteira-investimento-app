@@ -24,49 +24,23 @@
   </div>
 
   <div *ngIf="auth.authenticated()">
-    <h1>Operações Abertas</h1>
-    <ion-item>
-      <ion-label>Agrupar Papeis</ion-label>
-      <ion-checkbox color="dark" [checked]="checkAgrupar" [(ngModel)]="checkAgrupar" (click)="onAgruparPapel()"></ion-checkbox>
-    </ion-item>
-    <table class="altrowstable" id="alternatecolor">
-      <thead>
-        <tr>
-          <th>Papel</th>
-          <th>Data</th>
-          <th>Tipo</th>
-          <th>Preço Unitário</th>
-          <!--<th>despesa</th>-->
-          <th>Qtd</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of entradas">
-          <td>{{item?.papel?.papel}}</td>
-          <td>{{item?.data}}</td>
-          <td>{{item?.tipoOperacao}}</td>
-          <td>{{item?.precoUnitario | currency:'BRL':true}}</td>
-          <!--<td>{{item?.despesa | currency:'BRL':true}}</td>-->
-          <td>{{item?.quantidade}}</td>
-          <td>{{item?.total | currency:'BRL':true}}</td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td>Totais</td>
-          <td colspan="3"></td>
-          <td>{{totalQuantidade}}</td>
-          <td>{{totalValor | currency:'BRL':true}}</td>
-        </tr>
-      </tfoot>
-    </table>
+    <page-lista-entrada></page-lista-entrada>
   </div>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
-    <p>Carteira de Investimentos </p>
+
+    <ion-list>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="{{usuario?.picture}}">
+        </ion-avatar>
+        <h2>{{usuario?.name}}</h2>
+        <h3>Cartiera de Investimentos</h3>        
+      </ion-item>
+    </ion-list>
+
     <ion-buttons end>
       <button ion-button icon-right color="royal" (click)="auth.login()" *ngIf="!auth.authenticated()">
         Login
