@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { ListaEntradaPage } from './lista-entrada/lista-entrada';
 import { CadastroPage } from './cadastro/cadastro';
 import { Component } from '@angular/core';
@@ -11,7 +12,8 @@ import { NavController, ViewController } from 'ionic-angular';
 export class EntradaPage {
 
   constructor(public navCtrl: NavController,
-    private viewCtrl: ViewController) { }
+    private viewCtrl: ViewController,
+    private auth: AuthService) { }
 
 
   onViewWillEnter() {

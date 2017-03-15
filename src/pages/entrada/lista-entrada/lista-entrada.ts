@@ -27,6 +27,7 @@ export class ListaEntradaPage extends PageBase implements OnInit {
   }
 
   ngOnInit() {
+    console.clear();
     this.recuperarOperacoes();
     // //subscribe
     // project.subscribe(result => console.log('Subscription Streaming:', result));

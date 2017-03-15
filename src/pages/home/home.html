@@ -31,13 +31,13 @@
 <ion-footer>
   <ion-toolbar>
 
-    <ion-list>
+    <ion-list *ngIf="!!auth.usuario">
       <ion-item>
         <ion-avatar item-left>
-          <img src="{{usuario?.picture}}">
+          <img src="{{auth.usuario?.picture}}">
         </ion-avatar>
-        <h2>{{usuario?.name}}</h2>
-        <h3>Cartiera de Investimentos</h3>        
+        <h2>{{auth.usuario?.name}}</h2>
+        <h3>Cartiera de Investimentos</h3>
       </ion-item>
     </ion-list>
 

@@ -10,16 +10,38 @@
 </ion-header>
 
 
-<ion-content padding> 
+<ion-content padding>
   <h1>Top 5 Ações para Investir</h1>
   <ion-list class="formula-magica">
     <ion-item *ngFor="let p of papeisTop5">
-      <ion-avatar item-left>        
+      <ion-avatar item-left>
         {{p.rank}}
       </ion-avatar>
       <h2>Papel: {{p.papel}}</h2>
       <h3>ROE: {{p?.fundamento.roe}}</h3>
-      <p>P/L: {{p?.fundamento.p_l}} | P/VP: {{p?.fundamento.p_vp}}</p>      
+      <p>P/L: {{p?.fundamento.p_l}} | P/VP: {{p?.fundamento.p_vp}}</p>
     </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+
+    <ion-list *ngIf="!!auth.usuario">
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="{{auth.usuario?.picture}}">
+        </ion-avatar>
+        <h2>{{auth.usuario?.name}}</h2>
+        <h3>Cartiera de Investimentos</h3>
+      </ion-item>
+    </ion-list>
+
+    <ion-buttons end>
+      <button ion-button icon-right color="royal" (click)="auth.logout()" *ngIf="auth.authenticated()">
+        Logout
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

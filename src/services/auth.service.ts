@@ -16,6 +16,7 @@ export class AuthService {
     // Configure Auth0
     lock = new Auth0Lock('7B6Jko9Th6kGVUFxIUcue8Xk3kV3CoSg', 'rogeriocardoso.auth0.com', {});
     project = new ReplaySubject();
+    usuario: Usuario;
     // hasProfile: Observable<boolean>;
 
 
@@ -61,6 +62,7 @@ export class AuthService {
         this.removeInfo(TOKEN);
         this.removeInfo(PROFILE);
         this.pageMenuSrc.togglePage(PageMenu.ENTRADA);
+        this.usuario = null;
     }
 
     public fetchInfo(name: string): Promise<any> {
@@ -71,29 +73,24 @@ export class AuthService {
             .catch(err => console.log(err.mesaage));
     }
 
-    public fetchProfile(callBack): void {
+    public fetchProfile(): void {
         this.fetchInfo(PROFILE)
-            .then(p => {
-                if (p === undefined || p === null) {
-                    this.fetchInfo(TOKEN)
-                        .then(token => {
-                            // Fetch profile information
-                            this.lock.getProfile(token, (error, profile: Usuario) => {
-                                const profileLocal = JSON.stringify(profile);
-                                localStorage.setItem(PROFILE, profileLocal);
-                                this.storeInfo(PROFILE, profileLocal)
-                                callBack(profileLocal);
-                            });
-                        })
-                        .catch(err => console.log(err.message));
+            .then((profile: string) => {
+                if (profile === undefined || profile === null) {
+                    this.project
+                        .subscribe((profile: string) => {
+                            this.usuario = JSON.parse(profile);
+                        });
                 } else {
-                    callBack(p);
+                    this.usuario = JSON.parse(profile);
                 }
-
             })
-            .catch(err => console.log(err.message));
-
+            .catch(err => {
+                console.log(err.message);
+            });
     }
+
+
 
     private storeInfo(name: string, value: any) {
         this.initStorage()

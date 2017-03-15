@@ -16,8 +16,30 @@
 
 
 <ion-content padding>
-  
+
   <page-lista-entrada></page-lista-entrada>
   <!--<button ion-button (click)="onPageList()">Lista</button>-->
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+
+    <ion-list *ngIf="!!auth.usuario">
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="{{auth.usuario?.picture}}">
+        </ion-avatar>
+        <h2>{{auth.usuario?.name}}</h2>
+        <h3>Cartiera de Investimentos</h3>
+      </ion-item>
+    </ion-list>
+
+    <ion-buttons end>
+      <button ion-button icon-right color="royal" (click)="auth.logout()" *ngIf="auth.authenticated()">
+        Logout
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

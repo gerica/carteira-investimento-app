@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { PageBase } from './../page.base';
 import { Papel } from './../../model/papel';
 import { AcaoService } from './../../services/acao.service';
@@ -15,7 +16,8 @@ export class FormulaMagicaPage extends PageBase {
   toast: Toast;
   constructor(private acaoSrv: AcaoService,
     protected loadingCtrl: LoadingController,
-    protected toastCtrl: ToastController) {
+    protected toastCtrl: ToastController,
+    private auth: AuthService) {
     super(loadingCtrl, toastCtrl);
   }
 
