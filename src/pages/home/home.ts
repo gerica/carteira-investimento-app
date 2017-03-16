@@ -1,17 +1,16 @@
-import { Usuario } from './../../model/usuario';
-import { AuthService, PROFILE } from './../../services/auth.service';
+import { AuthService } from './../../services/auth.service';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {  
+export class HomePage {
 
   constructor(public auth: AuthService) { }
 
   ionViewWillEnter() {
-    console.clear();  
+    console.clear();
     this.auth.fetchProfile();
   }
 

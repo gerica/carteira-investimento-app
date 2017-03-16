@@ -1,22 +1,46 @@
+import { PapelService } from './../../../services/papel.service';
+import { Papel } from './../../../model/papel';
+import { OperacaoEntrada } from './../../../model/carteira/operacao-entrada';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
-/*
-  Generated class for the Cadastro page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-cadastro',
-  templateUrl: 'cadastro.html'
+  templateUrl: 'cadastro.html',
+  providers: [PapelService]
 })
 export class CadastroPage {
+  operacao: OperacaoEntrada = new OperacaoEntrada();
+  papeis: Papel[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController,
+    private papelService: PapelService) { }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CadastroPage');
+  ionViewWillEnter() {
+    // console.log('teste');
+    console.clear();
+    this.parseData();
+    this.getPapeis();
+
+  }
+
+  public parseData(): void {
+    let dataLocal = new Date();
+    let ano = dataLocal.toLocaleDateString().substring(6, 10);
+    let mes = dataLocal.toLocaleDateString().substring(3, 5);
+    let dia = dataLocal.toLocaleDateString().substring(0, 2);
+    this.operacao.data = ano + '-' + mes + '-' + dia;
+  }
+
+  private getPapeis(): void {
+    this.papelService.getPapeis().subscribe(
+      (data: Papel[]) => {
+        this.papeis = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 }

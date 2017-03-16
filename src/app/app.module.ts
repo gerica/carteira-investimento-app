@@ -1,3 +1,4 @@
+import { InputMaskCurrentDirective } from './../diretives/input-mask-current.directive';
 import { ListaEntradaPage } from './../pages/entrada/lista-entrada/lista-entrada';
 import { AxiomaDetalhePage } from './../pages/axioma/axioma-detalhe/axioma-detalhe';
 import { PageMenuService } from './../services/page-menu.service';
@@ -37,7 +38,8 @@ export const firebaseConfig = {
     AxiomaDetalhePage,
     EntradaPage,
     CadastroPage,
-    ListaEntradaPage
+    ListaEntradaPage,
+    InputMaskCurrentDirective
   ],
   imports: [
     IonicModule.forRoot(MyApp),
