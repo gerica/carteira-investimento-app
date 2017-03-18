@@ -8,16 +8,49 @@
 
 
 <ion-content padding>
-  <ion-item>
-    <ion-label>Data</ion-label>
-    <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="operacao.data"></ion-datetime>
-  </ion-item>
+  <form #f="ngForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label>Data</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="operacao.data" name="data" required></ion-datetime>
+    </ion-item>
 
-  <ion-item>
-    <ion-label>Papel</ion-label>
-    <ion-select [(ngModel)]="operacao.papel" >
-      <ion-option *ngFor="let p of papeis" [value]="p">{{p.papel}}</ion-option>      
-    </ion-select>
-  </ion-item>
+    <ion-item>
+      <ion-label>Papel</ion-label>
+      <ion-select [(ngModel)]="operacao.papel" name="papel" required>
+        <ion-option *ngFor="let p of papeis" [value]="p">{{p.papel}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Operação</ion-label>
+      <ion-select [(ngModel)]="operacao.tipoOperacao" name="operacao" required>
+        <ion-option value="Comprar">Comprar</ion-option>
+        <ion-option value="Vender">Vender</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Preço Unitário</ion-label>
+      <ion-input type="text" [(ngModel)]="operacao.precoUnitario" name="precoUnitario" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Quantidade</ion-label>
+      <ion-input type="text" [(ngModel)]="operacao.quantidade" name="quantidade" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Despesa</ion-label>
+      <ion-input type="text" [(ngModel)]="operacao.despesa" name="despesa" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Observação</ion-label>
+      <ion-textarea [(ngModel)]="operacao.observacao" name="observacao" required>
+      </ion-textarea>
+    </ion-item>
+
+    <button ion-button type="submit" block [disabled]="!f.valid">Gravar</button>
+  </form>
 
 </ion-content>
