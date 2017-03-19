@@ -1,3 +1,4 @@
+import { SaidaPage } from './../pages/saida/saida';
 import { EntradaPage } from './../pages/entrada/entrada';
 import { FormulaMagicaPage } from './../pages/formula-magica/formula-magica';
 import { PageMenu } from './../model/page.menu';
@@ -30,6 +31,7 @@ export class MyApp {
     pageMenuSrc.addPage(PageMenu.FORMULA_MAGICA, FormulaMagicaPage, true);
     pageMenuSrc.addPage(PageMenu.AXIOMA, AxiomaPage, true);
     pageMenuSrc.addPage(PageMenu.ENTRADA, EntradaPage, this.authService.authenticated());
+    pageMenuSrc.addPage(PageMenu.SAIDA, SaidaPage, this.authService.authenticated());
     this.pages = pageMenuSrc.pages;
 
   }

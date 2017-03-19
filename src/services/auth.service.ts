@@ -32,6 +32,7 @@ export class AuthService {
             localStorage.setItem(TOKEN, authResult.idToken);
             this.storeInfo(TOKEN, authResult.idToken);
             pageMenuSrc.togglePage(PageMenu.ENTRADA);
+            pageMenuSrc.togglePage(PageMenu.SAIDA);
 
             // Fetch profile information
             this.lock.getProfile(authResult.idToken, (error, profile: Usuario) => {
@@ -62,6 +63,7 @@ export class AuthService {
         this.removeInfo(TOKEN);
         this.removeInfo(PROFILE);
         this.pageMenuSrc.togglePage(PageMenu.ENTRADA);
+        this.pageMenuSrc.togglePage(PageMenu.SAIDA);
         this.usuario = null;
     }
 

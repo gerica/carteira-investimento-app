@@ -1,3 +1,4 @@
+import { SaidaPage } from './../pages/saida/saida';
 import { ModalOpcoesEntrada } from './../pages/entrada/lista-entrada/modal-opcoes-entrada';
 
 import { InputMaskCurrentDirective } from './../diretives/input-mask-current.directive';
@@ -44,7 +45,8 @@ export const firebaseConfig = {
     ListaEntradaPage,
     InputMaskCurrentDirective,
     OpcaoEntradaPage,
-    ModalOpcoesEntrada
+    ModalOpcoesEntrada,
+    SaidaPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -62,7 +64,8 @@ export const firebaseConfig = {
     CadastroPage,
     ListaEntradaPage,
     OpcaoEntradaPage,
-    ModalOpcoesEntrada
+    ModalOpcoesEntrada,
+    SaidaPage
   ],
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthService,

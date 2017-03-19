@@ -1,0 +1,41 @@
+page-saida {
+    table.altrowstable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #a9c6c9;
+	border-collapse: collapse;
+    width: 100%;
+}
+table.altrowstable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+table.altrowstable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+.success{
+    background-color: #dff8e3;
+    border-color: #caf4ca
+}
+.danger{
+    background-color: #ffe0e6;
+    border-color: #ffd0e1;
+}
+.panel-heading{
+    font-size: 2.5rem;
+    padding-bottom: 1rem;
+}
+
+.panel-body{        
+    padding: 10px;
+    margin-bottom: 30px;
+    background-color: #f7f7f7;
+}
+}

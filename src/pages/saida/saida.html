@@ -1,0 +1,71 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Saídas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <section class="panel">
+    <header class="panel-heading">
+      Lista de Operações fechadas
+    </header>
+    <div class="panel-body">
+      <table class="altrowstable" id="alternatecolor">
+        <thead>
+          <tr>
+            <th>
+              <ion-icon name="remove" (click)="showHideTabelaSaidaAll()" *ngIf="mostarTabelaSaidaAll"></ion-icon>
+              <ion-icon name="add" (click)="showHideTabelaSaidaAll()" *ngIf="!mostarTabelaSaidaAll"></ion-icon>
+            </th>
+            <th>Papel</th>
+            <th>Data</th>
+            <th>Total</th>
+            <th>Saldo</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of saidas" (dblclick)="showModalVisualizar(item)">
+          <tr [class.success]="item.saldo >0" [class.danger]="item.saldo <0">
+            <td>
+              <ion-icon name="remove" (click)="toggleSaida(item)" *ngIf="item.flagShow"></ion-icon>
+              <ion-icon name="add" (click)="toggleSaida(item)" *ngIf="!item.flagShow"></ion-icon>
+            </td>
+            <td>{{item?.operacaoEntrada?.papel?.papel}}</td>
+            <td>{{item?.data}}</td>
+            <td>{{item?.total| currency:'BRL':true}}</td>
+            <td>{{item?.saldo| currency:'BRL':true}}</td>
+          </tr>
+          <tr *ngIf="item?.flagShow">
+            <td></td>
+            <td style="text-align: center; vertical-align: middle">
+              <ion-icon name="arrow-round-forward"></ion-icon>
+            </td>
+            <td colspan="3">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Preço Unitário</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{item?.operacaoEntrada?.data}}</td>
+                    <td>{{item?.operacaoEntrada?.precoUnitario | currency:'BRL':true}}</td>
+                    <td>{{item?.operacaoEntrada?.total| currency:'BRL':true}}</td>
+                  </tr>                  
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</ion-content>
