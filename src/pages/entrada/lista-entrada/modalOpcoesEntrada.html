@@ -1,0 +1,114 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            {{titulo}}: {{operacao?.papel?.papel}}
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss('fechar')">
+        <span ion-text color="primary" showWhen="ios">Fechar</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list *ngIf="acoes[1]!==acao">
+        <ion-item>
+            <ion-avatar item-left>
+                {{operacao?.papel?.papel}}
+            </ion-avatar>
+            <h2>{{operacao?.papel?.nome}}</h2>
+            <p>ROE:{{operacao?.papel?.fundamento?.roe}}</p>
+        </ion-item>
+
+        <ion-item>
+            Data:
+            <ion-note item-right>
+                {{operacao?.data}}
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            Tipo de Operação:
+            <ion-note item-right>
+                {{operacao?.tipoOperacao}}
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            Preço Unitário:
+            <ion-note item-right>
+                {{operacao?.precoUnitario}}
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            Quantidade:
+            <ion-note item-right>
+                {{operacao?.quantidade}}
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            Despesa:
+            <ion-note item-right>
+                {{operacao?.despesa}}
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            Observação:
+            <ion-note item-right>
+                {{operacao?.observacao}}
+            </ion-note>
+        </ion-item>
+        <button ion-button icon-left color='dark' block (click)="dismiss(acoes[0])" *ngIf="acoes[0]===acao">
+                <ion-icon name="close-circle"></ion-icon>
+                {{acoes[3]}}
+        </button>
+        <button ion-button icon-left color='danger' block (click)="dismiss(acoes[2])" *ngIf="acoes[2]===acao">
+                <ion-icon name="trash"></ion-icon>
+                {{acoes[2]}}
+        </button>
+    </ion-list>
+
+    <form #f="ngForm" (ngSubmit)="onSubmit($event)" *ngIf="acoes[1]===acao">
+        <ion-item>
+            <ion-label>Data</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="saida.data" name="data" required></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Papel</ion-label>
+            <ion-input type="text" [(ngModel)]="saida.papel.papel" name="papel" required readonly></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Operação</ion-label>
+            <ion-input type="text" [(ngModel)]="saida.tipoOperacao" name="tipoOperacao" required readonly></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Preço Unitário</ion-label>
+            <ion-input type="text" [(ngModel)]="saida.precoUnitario" name="precoUnitario" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Quantidade</ion-label>
+            <ion-input type="text" [(ngModel)]="saida.quantidade" name="quantidade" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Despesa</ion-label>
+            <ion-input type="text" [(ngModel)]="saida.despesa" name="despesa" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Observação</ion-label>
+            <ion-textarea [(ngModel)]="saida.observacao" name="observacao" required>
+            </ion-textarea>
+        </ion-item>
+
+
+        <button ion-button type="submit" icon-left block>
+                <ion-icon name="exit"></ion-icon>
+                Realizar Saída
+        </button>
+    </form>
+</ion-content>

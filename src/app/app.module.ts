@@ -1,3 +1,5 @@
+import { ModalOpcoesEntrada } from './../pages/entrada/lista-entrada/modal-opcoes-entrada';
+
 import { InputMaskCurrentDirective } from './../diretives/input-mask-current.directive';
 import { ListaEntradaPage } from './../pages/entrada/lista-entrada/lista-entrada';
 import { AxiomaDetalhePage } from './../pages/axioma/axioma-detalhe/axioma-detalhe';
@@ -15,6 +17,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Http, RequestOptions } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import { AxiomaPage } from "../pages/axioma/axioma";
+import { OpcaoEntradaPage } from "../pages/entrada/lista-entrada/opcao-entrada";
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({}), http, options);
@@ -39,7 +42,9 @@ export const firebaseConfig = {
     EntradaPage,
     CadastroPage,
     ListaEntradaPage,
-    InputMaskCurrentDirective
+    InputMaskCurrentDirective,
+    OpcaoEntradaPage,
+    ModalOpcoesEntrada
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -55,7 +60,9 @@ export const firebaseConfig = {
     AxiomaDetalhePage,
     EntradaPage,
     CadastroPage,
-    ListaEntradaPage
+    ListaEntradaPage,
+    OpcaoEntradaPage,
+    ModalOpcoesEntrada
   ],
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthService,

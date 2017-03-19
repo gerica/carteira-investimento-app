@@ -51,9 +51,10 @@ export class CadastroPage extends PageBase {
         let user: Usuario = JSON.parse(profile);
         this.operacao.user_id = user.user_id;
         this.operacaoService.gravar(this.operacao);
-        this.novo();
+        // this.novo();
         this.loading.dismiss();
         this.createToast('Operação Realizada com sucesso.')
+        this.navCtrl.pop();
       }).catch(err => {
         this.loading.dismiss();
         this.createToast(err.message);

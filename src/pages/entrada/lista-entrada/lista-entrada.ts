@@ -1,6 +1,14 @@
+import { OperacaoSaida } from './../../../model/carteira/operacao-saida';
+import { ModalOpcoesEntrada } from './modal-opcoes-entrada';
+import { OpcaoEntradaPage, acoes } from './opcao-entrada';
 import { Usuario } from './../../../model/usuario';
 import { PageBase } from './../../page.base';
-import { LoadingController, ToastController } from 'ionic-angular';
+import {
+  LoadingController,
+  ToastController,
+  PopoverController,
+  ModalController
+} from 'ionic-angular';
 import { OperacaoService } from './../../../services/operacao.service';
 import { AuthService, PROFILE } from './../../../services/auth.service';
 import { OperacaoEntrada } from './../../../model/carteira/operacao-entrada';
@@ -20,6 +28,8 @@ export class ListaEntradaPage extends PageBase implements OnInit {
 
   constructor(public auth: AuthService,
     private operacaoService: OperacaoService,
+    private popoverCtrl: PopoverController,
+    private modalCtrl: ModalController,
     protected loadingCtrl: LoadingController,
     protected toastCtrl: ToastController) {
     super(loadingCtrl, toastCtrl);
@@ -93,7 +103,6 @@ export class ListaEntradaPage extends PageBase implements OnInit {
   }
 
   onAgruparPapel() {
-
     const entradasAgrupada: OperacaoEntrada[] = [];
 
     if (this.checkAgrupar) {
@@ -109,8 +118,7 @@ export class ListaEntradaPage extends PageBase implements OnInit {
 
         if (incluido) {
           for (let ea of entradasAgrupada) {
-            if (e.papel.papel === ea.papel.papel) {
-              // console.log(ea);
+            if (e.papel.papel === ea.papel.papel) {              
               ea.quantidade += e.quantidade;
               if (!ea.total) {
                 ea.total = 0;
@@ -132,6 +140,52 @@ export class ListaEntradaPage extends PageBase implements OnInit {
 
   }
 
+  public onOpcoes(item: OperacaoEntrada, event: MouseEvent): void {
+    const popover = this.popoverCtrl.create(OpcaoEntradaPage, { item: item });
+    popover.present({ ev: event });
+    popover.onDidDismiss(data => {
+      if (!data) {
+        return;
+      } else if (data.action === acoes[0]) {
+        this.modalOpcoes(data.item, acoes[0])
+      } else if (data.action === acoes[1]) {
+        this.modalOpcoes(data.item, acoes[1])
+      } else if (data.action === acoes[2]) {
+        this.modalOpcoes(data.item, acoes[2])
+      } else if (data.action === acoes[3]) {
+        return;
+      }
+
+    });
+  }
+
+  private modalOpcoes(operacao: OperacaoEntrada, acao: string): void {
+    let modal = this.modalCtrl.create(ModalOpcoesEntrada, { operacao: operacao, acao: acao });
+    modal.present();
+    modal.onDidDismiss(data => {
+      if (!data) {
+        return;
+      } else if (data.acao === acoes[0]) {
+        return;
+      } else if (data.acao === acoes[1]) {
+        this.gravarOperacaoSaida(data.saida);
+      } else if (data.acao === acoes[2]) {
+        this.excluir(data.operacao);
+      }
+    });
+  }
+
+  private excluir(operacao: OperacaoEntrada): void {
+    this.operacaoService.excluir(operacao)
+      .then(() => {
+        this.createToast('Operação Realizada com sucesso.');
+      })
+      .catch(error => {
+        this.createToast(error.message);
+      });
+  }
+
+
   private calcularTotais(): void {
     this.totalQuantidade = 0;
     this.totalValor = 0;
@@ -140,6 +194,32 @@ export class ListaEntradaPage extends PageBase implements OnInit {
       this.totalQuantidade += e.quantidade;
       this.totalValor += e.total;
     }
+  }
+
+  private gravarOperacaoSaida(operacaoSaida: OperacaoSaida): void {
+
+    if (this.validateQuantidade(operacaoSaida)) {
+
+      this.auth.fetchInfo(PROFILE)
+        .then((profile: string) => {
+          let user: Usuario = JSON.parse(profile);
+          operacaoSaida.user_id = user.user_id;
+          this.operacaoService.gravarSaida(operacaoSaida);
+          this.operacaoService.atualizarEntrada(operacaoSaida);
+          this.createToast('Operação Realizada com sucesso.')
+        }).catch(err => {
+          this.createToast(err.message);
+        });
+    } else {
+      this.createToast('A quantidade informada é maior que a existente.')
+    }
+  }
+
+  private validateQuantidade(operacaoSaida: OperacaoSaida): boolean {
+    if (operacaoSaida.quantidade > operacaoSaida.operacaoEntrada.quantidade) {
+      return false;
+    }
+    return true;
   }
 
 }
