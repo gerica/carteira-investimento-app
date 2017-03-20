@@ -23,9 +23,8 @@
     </p>
   </div>
 
-  <div *ngIf="auth.authenticated()">
-    <page-lista-entrada></page-lista-entrada>
-  </div>
+  <page-lista-entrada *ngIf="auth.authenticated()"></page-lista-entrada>
+
 </ion-content>
 
 <ion-footer>
